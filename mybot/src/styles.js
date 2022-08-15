@@ -152,27 +152,57 @@ export const styles = {
     },
     chatSubmit: {
         position:'absolute',
-  bottom:'6px',
-  right:'0px',
-  
-  background: 'transparent',
-  boxShadow:'none',
-  
-  borderTop:'1px solid #7a39e0',
-  borderBottom: 'none',
-  borderRight: 'none',
-  borderLeft: 'none',
+        bottom:'6px',
+        right:'0px',
+        background: 'white',
+        boxShadow:'none',
+        borderTop:'1px solid #7a39e0',
+        borderBottom: 'none',
+        borderRight: 'none',
+        borderLeft: 'none',
 //   borderTop: 'none',
 //   borderRadius:'50%',
 // padding: '12px',
-  color:'#7a39e0',
-  width:'45px',
-  height:'45px',
-  zIndex: '1'
+        color:'#7a39e0',
+        width:'45px',
+        height:'45px',
+        zIndex: '1'
     },
     historyContainer: {
         width: '100%',
-        height:'453.5px',
+        height:'400px',
         overflow: 'hidden',
-      }
+        color: 'white',
+        overflowY: 'scroll',
+        margin: '5px',
+        padding: '0 20px 0 0',
+        
+      },
+      userBackground: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+      },
+      botBackground: {
+        display: 'flex',
+        justifyContent: 'flex-start',
+      },
+      userMessage: {
+        textAlign: 'right',
+        backgroundColor: '#a376ea',
+        padding: '15px',
+        borderTopRightRadius: '10px',
+        borderTopLeftRadius: '10px',
+        borderBottomLeftRadius: '10px',
+        // borderBottomRightRadius:
+      },
+      botMessage: {
+        textAlign: 'left',
+        backgroundColor: '#7a39e0',
+        padding: '15px',
+        borderTopRightRadius: '10px',
+        borderTopLeftRadius: '10px',
+        // borderBottomLeftRadius: '10px',
+        borderBottomRightRadius: '10px',
+      },
+      
 }

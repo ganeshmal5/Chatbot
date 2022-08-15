@@ -1,31 +1,23 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from "react-redux";
 import { styles } from '../../styles'
-import Avatar from './Avatar'
 import 'material-icons/iconfont/material-icons.css';
-// import ChatContent from './ChatContent';
-// import store from '../../store';
-
 import '../../App.css';
-
-import { userMessage, botMessage } from '../../actions/actions';
-
 import { useDispatch, useSelector } from 'react-redux';
-
-import { inputSuccess, inputFail, messageSuccess, messageFail } from '../../features/chatreducer';
+import { inputSuccess, messageSuccess } from '../../features/chatreducer';
 // const dispatch = useDispatch();
 
-const Chatbot = ({  userMessage, botMessage }) => {
+// const { messages } = useSelector((store) => store.chat);
+
+const Chatbot = ({ messages }) => {
 
     const dispatch = useDispatch();
-    const { messages } = useSelector((store) => store.chat);
-    console.log('Inside Chatbot')
-    console.log(messages)
+    // const { messages } = useSelector((store) => store.chat);
+
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
-    // const [userMessage, setUserMessage] = useState(null)
 
-    const [message, setMessage] = useState("");
+    const [text, setText] = useState("");
     const endOfMessages = useRef(null);
 
     function handleSubmit(event) {
@@ -45,20 +37,11 @@ const Chatbot = ({  userMessage, botMessage }) => {
         
 
         if (code === 13) {
-          console.log('handle click');
-          console.log(message)
-          dispatch(inputSuccess(message));
-          userMessage(message);
-          console.log('After user message')
-          console.log('1')
-          botMessage(message);
-          console.log('After bot message')
-          console.log('2')
-          setMessage("");
+          dispatch(inputSuccess(text));
+          dispatch(messageSuccess(text));
+          setText("");
         }
       };
-
-   
 
     if (!loading) { 
         return(
@@ -117,23 +100,34 @@ const Chatbot = ({  userMessage, botMessage }) => {
                     <div style={{postion: 'absolute', textAlign: 'center', width: '100%', height: '50px', backgroundColor: '#7a39e0', color: 'white', fontSize: '36px', top: '5%',padding: '10px'}}>
                         Aurora support
                     </div>
-                    
                     <div style={styles.historyContainer}>
-                        {/* {messages} */}
+                        {messages.length === 0  ? "" : (messages.map((msg) => { 
+                            if(msg.type == "user"){
+                                return <div style={styles.userBackground}>
+                                 <p style={styles.userMessage}>{msg.message}</p>
+                            </div> }
+                            else if(msg.type == "bot"){
+                                return <div style={styles.botBackground}>
+                                 <p style={styles.botMessage}>{msg.message}</p>
+                            </div>
+                            }
+                            else {
+                                return 'Oops, Something went wrong'
+                            }
+
+                        }))}
                         
-                        {/* {chat.length === 0  ? "" : (chat.map((msg) => { return msg.message}))} */}
-                        {/* {messages.length === 0  ? "" : (messages.map((msg) => { return msg.message}))}  */}
+                        
                          <div ref={endOfMessages}></div>
                     </div>
                      
-                     {/* <div class="historyContainer">
-                     {message}
-                     </div> */}
+                    
+                     
                     <input
                              style={styles.chatBottom}
                              className="box"
-                             name="userMessage"
-                             onChange={e => setMessage(e.target.value)}
+                             name="text"
+                             onChange={e => setText(e.target.value)}
                              onKeyPress={handleClick}
                              placeholder='Type your message here'
                             //  onSubmit={handleMessage()}
@@ -146,15 +140,10 @@ const Chatbot = ({  userMessage, botMessage }) => {
 
 }
 
-// const mapStateToProps = (state) => ({
-//     xyz: state.chatreducer.messages
-//   });
+function mapStateToProps(state) {
+    const { messages } = state.chat.chatReducer
+    return { messages }
+  }
   
-// const params =  connect(mapStateToProps, {userMessage, botMessage });
-
-// Chatbot(params);
-
-
-export default Chatbot;
-
-// export default connect(mapStateToProps, { userMessage, botMessage })(Chatbot);
+  export default connect(mapStateToProps)(Chatbot)
+  
