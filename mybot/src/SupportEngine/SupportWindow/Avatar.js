@@ -12,7 +12,7 @@ const Avatar = props => {
                     ...styles.avatarHello,
                     ...{ opacity: hovered ? '1' : '0'}
                 }}
-            >Hey It's Aurora</div>
+            >Hey It's Ganeshbot</div>
             <div 
                 className="transition-3"
                 onMouseEnter={() => setHovered(true)}
